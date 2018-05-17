@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 public class NoticeDAO {
 
-	DataSource ds;
+	DataSource ds;  
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
