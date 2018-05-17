@@ -1,5 +1,7 @@
 package notice_board.action;
 
+import javax.servlet.http.HttpServletResponse;
+
 public class AddAction implements Action {
 
 	
