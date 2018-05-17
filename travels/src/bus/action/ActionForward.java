@@ -7,6 +7,7 @@ ActionForward 클래스는 Action 인터페이스에서 명령을 수행하고 결과 값을
 이 값들은 FrontController에서 ActionForward 클래스 타입으로 반환값을
 가져오면 그 값을 확인하여 해당하는 요청 페이지로 포워딩 처리를 합니다.
 */
+//aaa
 
 public class ActionForward {
 	private boolean redirect = false;
