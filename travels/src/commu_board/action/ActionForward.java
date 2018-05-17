@@ -1,4 +1,4 @@
-package notice.action;
+package commu_board.action;
 
 /*
 ActionForward 클래스는 Action 인터페이스에서 명령을 수행하고 결과 값을
