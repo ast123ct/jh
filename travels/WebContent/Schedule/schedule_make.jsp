@@ -7,7 +7,7 @@
 </head>
 <body>
 	<fieldset>
-	<legend>일 정</legend>	
+	<legend>일 정 </legend>	
 	<form>
 		<input type="text" id="schedule_name" placeholder="일정 제목을 입력하세요">
 		<input type="text" id="schedule_content" placeholder="일정에 대한 메모를 작성하세요">
