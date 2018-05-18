@@ -1,4 +1,4 @@
-package commu_board.action;
+package qna_board.action;
 
 public class ModifyAction {
 

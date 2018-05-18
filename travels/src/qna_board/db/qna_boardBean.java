@@ -1,8 +1,8 @@
-package commu_board.db;
+package qna_board.db;
 
 import java.util.Date;
 
-public class commu_boardBean {
+public class qna_boardBean {
 	private int qna_no;
 	private String qna_title;
 	private String qna_content;

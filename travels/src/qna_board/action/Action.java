@@ -1,4 +1,4 @@
-package commu_board.action;
+package qna_board.action;
 
 import javax.servlet.http.*;
 //특정 비즈니스 요청으로 수행하고 결과 값을 ActionForward 타입으로 변환하는 메서드가 정의되어 있습니다.
