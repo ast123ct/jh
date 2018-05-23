@@ -109,6 +109,23 @@ public class festivalDAO {
 			}
 		}
 		return result;
+	}//insertFestival_img end
+	
+	public List<festival> getFestivalList(){
+		List<festival> list = new ArrayList<festival>();
+		try {
+			con=ds.getConnection();
+			
+		}catch(Exception e) {
+			System.out.println("축제 리스트 에러" + e.getMessage());
+		}finally {
+			
+		}try {
+			
+		}catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		return list;
 	}
 	
 	

@@ -5,7 +5,7 @@ public class travel_comment {
 	private String travel_comt_cont;
 	private int user_no;
 	private int travel_no;
-	
+	  
 	
 	public int getTravel_comt_no() {
 		return travel_comt_no;
