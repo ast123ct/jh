@@ -16,6 +16,7 @@
 	})
 </script>
 <body>
+<jsp:include page="/MainHeader.jsp"></jsp:include>
 <h1>로그인</h1>
 <hr>
 	<form name ="loginform.jsp" action="loginProcess.net" method="post">

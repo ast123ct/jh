@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//src/net/board/db/BoardDAO.java=UTF-8
+encoding//src/net/board/db/BoardDAO_seq.java=UTF-8
+encoding//src/net/member/action/Member_deleteAction.java=UTF-8
+encoding//src/net/member/action/Member_updateAction.java=UTF-8
+encoding//src/net/member/db/Member.java=UTF-8
+encoding//src/net/member/db/MemberDAO.java=UTF-8

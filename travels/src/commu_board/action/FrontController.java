@@ -1,4 +1,4 @@
-package commu_board.action;
+/*package commu_board.action;
 
 import java.io.IOException;
 
@@ -17,24 +17,24 @@ public class FrontController extends javax.servlet.http.HttpServlet{
       
       String RequestURI=request.getRequestURI();
       
-      //getContextPath() : ÄÁÅØ½ºÆ® °æ·Î°¡ ¹ÝÈ¯µË´Ï´Ù.
-      //ContextPath´Â "/JspProject"°¡ ¹ÝÈ¯µË´Ï´Ù.
+      //getContextPath() : ï¿½ï¿½ï¿½Ø½ï¿½Æ® ï¿½ï¿½Î°ï¿½ ï¿½ï¿½È¯ï¿½Ë´Ï´ï¿½.
+      //ContextPathï¿½ï¿½ "/JspProject"ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ë´Ï´ï¿½.
       String contextPath=request.getContextPath();
       
-      //RequestURI¿¡¼­ ÄÁÅØ½ºÆ® °æ·Î ±æÀÌ °ªÀÇ ÀÎµ¦½º À§Ä¡ÀÇ ¹®ÀÚºÎÅÍ
-      //¸¶Áö¸· À§Ä¡ ¹®ÀÚ±îÁö ÃßÃâÇÕ´Ï´Ù.
-      //command´Â "/login.net" ¹ÝÈ¯µË´Ï´Ù.
+      //RequestURIï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
+      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+      //commandï¿½ï¿½ "/login.net" ï¿½ï¿½È¯ï¿½Ë´Ï´ï¿½.
       String command=RequestURI.substring(contextPath.length());
       
       
-      //ÃÊ±âÈ­
+      //ï¿½Ê±ï¿½È­
       ActionForward forward=null;
       Action action=null;
       
       
       
       if(command.equals("/BoardList.bo")) {
-         action = new BoardListAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+         action = new BoardListAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
          try {
             forward=action.execute(request,  response);
          } catch(Exception e) {
@@ -45,14 +45,14 @@ public class FrontController extends javax.servlet.http.HttpServlet{
          forward.setRedirect(false);
          forward.setPath("/1_board/qna_board_write.jsp");
       } else if(command.equals("/BoardAddAction.bo")) {
-          action = new BoardAddAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardAddAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardDetailAction.bo")) {
-          action = new BoardDetailAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardDetailAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
@@ -63,42 +63,42 @@ public class FrontController extends javax.servlet.http.HttpServlet{
              forward.setRedirect(false);
              forward.setPath("/1_board/qna_board_delete.jsp");
       } else if(command.equals("/BoardDeleteAction.bo")) {
-          action = new BoardDeleteAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardDeleteAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardModifyView.bo")) {
-          action = new Board_update();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new Board_update();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardUpdateAction.bo")) {
-          action = new BoardUpdateAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardUpdateAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardReplyView.bo")) {
-          action = new BoardReplyView();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardReplyView();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardReplyAction.bo")) {
-          action = new BoardReplyAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardReplyAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
              e.printStackTrace();
           }
       } else if(command.equals("/BoardFileDown.bo")) {
-          action = new BoardFileDownAction();//´ÙÇü¼º¿¡ ÀÇÇÑ ¾÷Ä³½ºÆÃ
+          action = new BoardFileDownAction();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½
           try {
              forward=action.execute(request,  response);
           } catch(Exception e) {
@@ -110,9 +110,9 @@ public class FrontController extends javax.servlet.http.HttpServlet{
           
           
       if(forward != null) {
-         if(forward.isRedirect()) {   //¸®´ÙÀÌ·ºÆ® µË´Ï´Ù.
+         if(forward.isRedirect()) {   //ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½Æ® ï¿½Ë´Ï´ï¿½.
             response.sendRedirect(forward.getPath());
-         } else {   //Æ÷¿öµù µË´Ï´Ù.
+         } else {   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½.
             RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
             dispatcher.forward(request, response);
          }
@@ -120,8 +120,8 @@ public class FrontController extends javax.servlet.http.HttpServlet{
       }
    }
    
-   //doProcess¸Þ¼­µå¸¦ ±¸ÇöÇÏ¿© ¿äÃ»ÀÌ get¹æ½ÄÀÌµç post ¹æ½ÄÀÌµç
-   //Àü¼ÛµÇ¾î ¿À´Â °°Àº ¸Þ¼­µå¿¡¼­ ¿äÃ»À» Ã³¸®ÇÒ ¼ö ÀÖµµ·Ï ÇÏ¿´½À´Ï´Ù.
+   //doProcessï¿½Þ¼ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ getï¿½ï¿½ï¿½ï¿½Ìµï¿½ post ï¿½ï¿½ï¿½ï¿½Ìµï¿½
+   //ï¿½ï¿½ï¿½ÛµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
                      throws ServletException, IOException {
       doProcess(request,response);
@@ -131,4 +131,4 @@ public class FrontController extends javax.servlet.http.HttpServlet{
       doProcess(request, response);
    }
       
-   }
+   }*/

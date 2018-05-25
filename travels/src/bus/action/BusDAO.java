@@ -7,12 +7,15 @@ import javax.sql.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import client.action.Client;
+
 import javax.naming.*;
 	
 public class BusDAO {
 	DataSource ds;
 	Connection con;
 	PreparedStatement pstmt;
+	Statement stmt;
 	ResultSet rs;
 	int result;
 	
@@ -61,8 +64,8 @@ public class BusDAO {
 		return list;
 	}//info end
 	
-	public boolean BusInsert(BusBean bb) {
-		int result=0;
+	public int BusInsert(BusBean bb) {
+		int no=0;
 		try {
 			con=ds.getConnection();		
 			String sql = "insert into bus_list"
@@ -79,44 +82,66 @@ public class BusDAO {
 			pstmt.setInt(8, bb.getBus_cost_ch());
 			pstmt.executeQuery();
 			pstmt.close();
+			System.out.println("list 성공");
 			
-			String sql2 = "create sequece bus_?_seq "
-				+ "increment by 1 "
-				+ "start with 1";
+			String sql2 ="select bus_no from bus_list"
+			+ " where bus_area=? and bus_start=? and bus_end=?";
 			pstmt = con.prepareStatement(sql2);
-			pstmt.executeQuery();
-			pstmt.close();
-						
-			String sql3 ="insert into bus_?_schedule "
-				+ "values(?,bus_?_seq.nextval,?,?)";
-			pstmt = con.prepareStatement(sql3);
+			pstmt.setString(1, bb.getBus_area());
+			pstmt.setString(2, bb.getBus_start());
+			pstmt.setString(3, bb.getBus_end());
 			rs=pstmt.executeQuery();
+			System.out.println("노선 뽑기 성공");		
+		
+			if(rs.next()) {	no = rs.getInt(1);}
+			System.out.println(no);
 			
-			while(rs.next()) {
-			pstmt.setInt(1, bb.getBus_no());
-			pstmt.setInt(2, bb.getBus_no());
-			pstmt.setString(3, bb.getBus_departure());
-			pstmt.setString(4,bb.getBus_arrival());
-			}					
-			result = pstmt.executeUpdate();						
-			if(result==0) {return false;}
-			return true;
-			
+		
 		}catch(Exception ex) {
 			System.out.println("Insert() 에러 :  " + ex);
 		}
 		finally {
 			if(rs!=null)try {rs.close();}catch(SQLException e) {}
 			if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
+			if(stmt!=null)try {stmt.close();}catch(SQLException e) {}
 			if(con!=null)try {con.close();}catch(SQLException e) {}
 		}		
-		return false;
+		return no;
 	}//insert end
+	public int BusInsertSchedule(int result, BusBean bb, int[] bus_seq, String[] bus_departure, String[] bus_arrival) {
+			int num=0;
+		try {
+			con=ds.getConnection();		
+			stmt=con.createStatement();
+			
+			for(int i=0; i<bus_departure.length; i++) {
+			String sql = "insert into bus_" +bb.getBus_area() +"_schedule"
+					+ " values("+result+","+bus_seq[i]+",\'"+bus_departure[i]+"\',\'"+bus_arrival[i]+"\')";
+			System.out.println(sql);			
+			num=stmt.executeUpdate(sql);
+			}
+			System.out.println(num);
+			System.out.println("schedule 성공");
+		
+		}catch(Exception ex) {
+			System.out.println("Schdule Insert() 에러 :  " + ex);
+		}
+		finally {
+			if(rs!=null)try {rs.close();}catch(SQLException e) {}
+			if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
+			if(stmt!=null)try {stmt.close();}catch(SQLException e) {}
+			if(con!=null)try {con.close();}catch(SQLException e) {}
+		}		
+		return num;
+	}//insert schedule end
+
 	
-	public boolean BusModify(BusBean bb) {
-		String sql = "update bus_list set "
-				+ "bus_area=?, bus_linename=?, bus_start=?, bus_end=?, "
-				+ "bus_traveltime=?, bus_cost_ad=?, bus_cost_st=?, bus_cost_ch=? "
+	
+	public int BusModify(BusBean bb) {
+		result=0;
+		String sql = "update bus_list set bus_area=?, bus_linename=?, "
+				+ "bus_start=?, bus_end=?, bus_traveltime=?, "
+				+ "bus_cost_ad=?, bus_cost_st=?, bus_cost_ch=? "
 				+ "where bus_no=?";
 		try {
 			con=ds.getConnection();
@@ -131,18 +156,7 @@ public class BusDAO {
 			pstmt.setInt(8, bb.getBus_cost_ch());
 			pstmt.setInt(9, bb.getBus_no());
 			result =pstmt.executeUpdate();
-			pstmt.close();
-			
-			String sql2="update bus_?_schedule set "
-					+ "bus_departure =?, bus_arrival=? "
-					+ "where bus_no=? and bus_seq=?";
-			pstmt = con.prepareStatement(sql2);
-			pstmt.setString(1, bb.getBus_area());
-			pstmt.setString(2, bb.getBus_departure());
-			pstmt.setString(3, bb.getBus_arrival());
-			pstmt.setInt(4, bb.getBus_no());
-			pstmt.setInt(5, bb.getBus_seq());
-			result = pstmt.executeUpdate();
+					
 		
 		}catch(Exception ex) {
 			System.out.println("modify() 에러 :  " + ex);
@@ -151,28 +165,27 @@ public class BusDAO {
 			if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
 			if(con!=null)try {con.close();}catch(SQLException e) {}
 		}
-		if(result == 1) {
-			return true;
-		}else {
-			return false;
-		}
+			return result;
 	}//modify end
 	
-	public boolean Busdelete(BusBean bb) {
-		String sql = "delete from bus_?_schedule"
-				+ " where bus_no=?";
+	public int Busdelete(String area, int no) {
+		result=0;
+		
 		try {
 			con=ds.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bb.getBus_area());
-			pstmt.setInt(2, bb.getBus_no());
-			result =pstmt.executeUpdate();
-			pstmt.close();
+			String sql = "delete from bus_"+area+"_schedule"
+					+ " where bus_no="+no;
+			
+			stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			System.out.println("schedule 삭제 성공");
+			stmt.close();
 			
 			String sql2= "delete from bus_list where bus_no=?";
 			pstmt = con.prepareStatement(sql2);
-			pstmt.setInt(1, bb.getBus_no());
+			pstmt.setInt(1, no);
 			result =pstmt.executeUpdate();
+			System.out.println("list 노선 삭제 성공");
 					
 		}catch(Exception ex) {
 			System.out.println("delete() 에러 :  " + ex);
@@ -181,18 +194,12 @@ public class BusDAO {
 			if(pstmt!=null)try {pstmt.close();}catch(SQLException e) {}
 			if(con!=null)try {con.close();}catch(SQLException e) {}
 		}	
-		if(result == 1) {
-			return true;
-		}else {
-			return false;
-		}
+			return result;
 	}//delete end	
 
 	public JSONArray select_start(String area) {
 		JSONArray array = new JSONArray();
 		try{
-			Context init = new InitialContext();
-			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/OracleDB");
 			con = ds.getConnection();
 		
 			String sql ="select distinct bus_start from bus_list where bus_area=?";
@@ -208,7 +215,7 @@ public class BusDAO {
 			}			
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println("select_start 에러() : " + e);
 		}
 		finally{
 			if(pstmt!=null)try{pstmt.close();}catch(Exception ex){}
@@ -217,8 +224,201 @@ public class BusDAO {
 		}
 		
 		return array;
+	}//select_start end
+
+	public JSONArray select_end(String area, String start) {
+		JSONArray array = new JSONArray();
+		try{
+			con = ds.getConnection();
+		
+			String sql ="select bus_end from bus_list where bus_area=? and bus_start=?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, area);
+					pstmt.setString(2, start);
+					rs=pstmt.executeQuery();
+
+			while(rs.next()){
+				JSONObject object = new JSONObject();
+				object.put("bus_end", rs.getString(1));
+				array.add(object);
+			}
+		}catch(Exception e){
+			System.out.println("select_end 에러() : " + e);
+		}
+		finally{
+			if(pstmt!=null)try{pstmt.close();}catch(Exception ex){}
+			if(rs!=null)try{rs.close();}catch(Exception ex){}
+			if(con!=null)try{con.close();}catch(Exception ex){}
+		}
+		return array;
+	}//select end end
+
+	public JSONArray select_no(String area, String start, String end) {
+		JSONArray array = new JSONArray();
+		try{
+			con = ds.getConnection();
+		
+			String sql ="select bus_no from bus_list where bus_area=? and bus_start=? and bus_end=?";
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, area);
+					pstmt.setString(2, start);
+					pstmt.setString(3, end);
+				rs=pstmt.executeQuery();
+
+			while(rs.next()){
+				JSONObject object = new JSONObject();
+				object.put("bus_no", rs.getInt(1));
+				array.add(object);
+			}
+		}catch(Exception e){
+			System.out.println("select_no 에러() : " + e);
+		}
+		finally{
+			if(pstmt!=null)try{pstmt.close();}catch(Exception ex){}
+			if(rs!=null)try{rs.close();}catch(Exception ex){}
+			if(con!=null)try{con.close();}catch(Exception ex){}
+		}
+		return array;
+	}//select no end
+
+	public JSONArray search(String area, int no) {
+		JSONArray array = new JSONArray();
+		try{
+			con = ds.getConnection();
+
+			String sql ="select * from bus_list natural join bus_" 
+						+area+"_schedule where bus_no=" + no;
+			System.out.println(sql);
+			stmt=con.createStatement();
+			rs = stmt.executeQuery(sql);
+
+				while(rs.next()){
+				JSONObject object = new JSONObject();
+				object.put("bus_no", rs.getInt(1));		
+				object.put("bus_area", rs.getString(2));
+				object.put("bus_linename", rs.getString(3));
+				object.put("bus_start", rs.getString(4));
+				object.put("bus_end", rs.getString(5));
+				object.put("bus_traveltime", rs.getString(6));
+				object.put("bus_cost_ad", rs.getInt(7));
+				object.put("bus_cost_st", rs.getInt(8));
+				object.put("bus_cost_ch", rs.getInt(9));
+				object.put("bus_seq", rs.getInt(10));
+				object.put("bus_departure", rs.getString(11));
+				object.put("bus_arrival", rs.getString(12));
+				array.add(object);
+			} 
+
+		}catch(Exception e){
+			System.out.println("search 에러() : " +e);
+		}
+		finally{
+			if(stmt!=null)try{stmt.close();}catch(Exception ex){}
+			if(rs!=null)try{rs.close();}catch(Exception ex){}
+			if(con!=null)try{con.close();}catch(Exception ex){}
+		}
+		return array;
+	}//search end
+
+	public BusBean bus_info(String bus_area, int bus_no) {
+		BusBean bb = new BusBean();
+		try {
+			con = ds.getConnection();
+			String sql ="select * from bus_list natural join bus_" 
+					+bus_area+"_schedule where bus_no=" + bus_no;
+		System.out.println(sql);
+		stmt=con.createStatement();
+		rs = stmt.executeQuery(sql);
+
+			while(rs.next()){
+			bb.setBus_no(rs.getInt("bus_no"));
+			bb.setBus_area(rs.getString("bus_area"));
+			bb.setBus_linename(rs.getString("bus_linename"));
+			bb.setBus_start(rs.getString("bus_start"));
+			bb.setBus_end(rs.getString("bus_end"));
+			bb.setBus_traveltime(rs.getString("bus_traveltime"));
+			bb.setBus_cost_ad(rs.getInt("bus_cost_ad"));
+			bb.setBus_cost_st(rs.getInt("bus_cost_st"));
+			bb.setBus_cost_ch(rs.getInt("bus_cost_ch"));
+			bb.setBus_seq(rs.getInt("bus_seq"));
+			bb.setBus_departure(rs.getString("bus_departure"));
+			bb.setBus_arrival(rs.getString("bus_arrival"));
+
+		} 	
+		}catch(Exception e) {
+			System.out.println("bus_info 에러() : " + e);
+		}
+		finally {
+			try {if(rs !=null) rs.close();}catch(Exception e) {e.printStackTrace();}
+			try {if(stmt !=null) stmt.close();}catch(Exception e) {e.printStackTrace();}
+			try {if(con!=null) con.close();} catch (SQLException sqle) {sqle.printStackTrace();
+			}
+		}	
+		return bb;
+	}//bus_info end
+
+	public List<BusBean> scehdulelist(String bus_area, int bus_no) {
+		List<BusBean> list = new ArrayList();
+		
+		try {
+			con = ds.getConnection();
+			String sql = "select bus_seq, bus_departure, bus_arrival"
+						+" from bus_" + bus_area + "_schedule where bus_no=" + bus_no + " order by bus_seq";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);		
+			while(rs.next()) {
+				BusBean bb = new BusBean();
+				bb.setBus_seq(rs.getInt("bus_seq"));
+				bb.setBus_departure(rs.getString("bus_departure"));
+				bb.setBus_arrival(rs.getString("bus_arrival"));
+				list.add(bb);
+			}
+		}catch(Exception e) {
+			System.out.println("scehdulelist 에러() : " + e);
+		}
+		finally {
+			try {if(rs !=null) rs.close();}catch(Exception e) {e.printStackTrace();}
+			try {if(stmt !=null) stmt.close();}catch(Exception e) {e.printStackTrace();}
+			try {if(con!=null) con.close();} catch (SQLException sqle) {sqle.printStackTrace();
+			}
+		}
+		return list;
+	}//schedulelist end
+
+	public int BusModifySchedule(int bus_no, String bus_area, int[] bus_seq, String[] bus_departure, String[] bus_arrival) {
+		int num=0;
+		try {
+			con=ds.getConnection();		
+			stmt=con.createStatement();
+			System.out.println(bus_no);
+			String sql = "delete from bus_"+ bus_area
+						+ "_schedule where bus_no=" + bus_no;
+			System.out.println(sql);
+			stmt.executeUpdate(sql);
+			stmt.close();
+			System.out.println("스케줄 삭제 성공");
+			
+			stmt=con.createStatement();
+			for(int i=0; i<bus_departure.length; i++) {
+			String sql2 = "insert into bus_" + bus_area +"_schedule "
+					+ "values(" + bus_no + "," + bus_seq[i] + ",\'"
+					+ bus_departure[i] + "\',\'" + bus_arrival[i] + "\')";
+			System.out.println(sql2);			
+			num=stmt.executeUpdate(sql2);
+			}
+			System.out.println(num);
+			System.out.println("schedule 성공");
+		
+		}catch(Exception ex) {
+			System.out.println("BusModifySchedule() 에러 :  " + ex);
+		}
+		finally {
+			if(rs!=null)try {rs.close();}catch(SQLException e) {}
+			if(stmt!=null)try {stmt.close();}catch(SQLException e) {}
+			if(con!=null)try {con.close();}catch(SQLException e) {}
+		}		
+		return num;
 	}
 
-	
 	
 }

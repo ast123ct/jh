@@ -1,5 +1,5 @@
 select*from tab;
-
+purge recyclebin;
 
 create table bus_Seoul_schedule(
 	bus_no			number not null,
@@ -21,6 +21,10 @@ insert into bus_Seoul_schedule values(18,8,'13:00','15:00');
 insert into bus_Seoul_schedule values(35,1,'13:00','15:00');
 
 select*from bus_Seoul_schedule;
+delete from bus_Seoul_schedule where bus_no=80;
+insert into bus_Seoul_schedule values(75,1,'13:00','15:00');
+update bus_Seoul_schedule set bus_seq=3, bus_departure='13:02', bus_arrival='13:05' where bus_no=75;
+select*from BUS_SEOUL_SCHEDULE where bus_no=80;
 select*from bus_list natural join bus_Seoul_schedule where bus_no=35;
 
 create table bus_Incheon_schedule(

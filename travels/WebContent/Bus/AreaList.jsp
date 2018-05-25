@@ -32,7 +32,7 @@
 		$("#bus_start").change(function(event){
 			var startdata = "bus_start=" + $(this).val();	
 			output='';
-			$.getJSON('Bus/select_end.jsp', startdata,function(data){
+			$.getJSON('select_end.bus', startdata,function(data){
 				$("#bus_end").empty();
 				output +='<option></option>'
 				$(data).each(function(index){					
@@ -45,7 +45,7 @@
 		
 		$("#bus_end").change(function(envent){
 			var enddata = "bus_end=" + $(this).val();
-			$.getJSON('Bus/select_no.jsp', enddata, function(data){	
+			$.getJSON('select_no.bus', enddata, function(data){	
 				$(data).each(function(index){
 					$("#search").val(this.bus_no);
 				})
@@ -56,7 +56,7 @@
 			event.preventDefault();
 			var nodata = "bus_no=" + $("#search").val();	
 			output='';
-			$.getJSON('Bus/search.jsp', nodata,function(data){
+			$.getJSON('search.bus', nodata,function(data){
 				$(data).each(function(index){
 					output += '<tr>';
 					output += '<td>'+this.bus_seq+'</td>';
@@ -67,6 +67,7 @@
 					output += '<td>'+this.bus_cost_ad+'</td>';
 					output += '<td>'+this.bus_cost_st+'</td>';
 					output += '<td>'+this.bus_cost_ch+'</td>';
+					output += '<td><button name=\"add\">일정추가</td>';
 					output += '</tr>';
 				})//function end
 				$('#output').append(output);
@@ -75,6 +76,7 @@
 	})//ready end
 </script>
 <body>
+<jsp:include page="/MainHeader.jsp"></jsp:include>
 <form id="bus_area">
 	<fieldset>
 		<table>
@@ -117,7 +119,7 @@
 	<table border="1">
 	<thead>
 		<tr>
-			<th>순서</th><th>노선명</th><th>출발 시간</th><th>이동 시간</th><th>도착 시간</th><th>성인 비용</th><th>청소년 비용</th><th>아동 비용</th>
+			<th>순서</th><th>노선명</th><th>출발 시간</th><th>이동 시간</th><th>도착 시간</th><th>성인 비용</th><th>청소년 비용</th><th>아동 비용</th><th></th>
 		</tr>
 	</thead>
 	<tbody id="output"></tbody>

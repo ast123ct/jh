@@ -36,7 +36,7 @@ public class BusFrontController extends HttpServlet {
     	if(command.equals("/AreaList.bus")) {
 			forward=new ActionForward();
 			forward.setRedirect(false);	
-			forward.setPath("/Bus/AreaList.jsp");
+			forward.setPath("./Bus/AreaList.jsp");
 		}
     	else if(command.equals("/select_start.bus")) {
 			action = new Select_start();
@@ -64,6 +64,48 @@ public class BusFrontController extends HttpServlet {
 		}
     	else if(command.equals("/search.bus")) {
 			action = new Search();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+    	}
+    	else if(command.equals("/BusAdd.bus")) {
+			forward=new ActionForward();
+			forward.setRedirect(false);	
+			forward.setPath("./Bus/BusAdd.jsp");
+		}
+    	else if(command.equals("/BusSearch.bus")) {
+			forward=new ActionForward();
+			forward.setRedirect(false);	
+			forward.setPath("./Bus/BusSearch.jsp");
+		}
+    	else if(command.equals("/BusModify.bus")) {
+			action = new BusModifyAction();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+    	}
+    	else if(command.equals("/BusModifyProcess.bus")) {
+    		action = new BusModifyProcess();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	else if(command.equals("/BusDelete.bus")) {
+			action = new BusDeleteAction();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+    	}
+    	else if(command.equals("/BusAddAction.bus")) {
+			action = new BusAddAction();
 			try {
 				forward=action.execute(request, response);
 			}catch(Exception e) {
