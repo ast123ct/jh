@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bus.db.BusBean;
+import bus.db.BusDAO;
+
 
 public class BusModifyAction implements Action{
 
@@ -29,7 +32,7 @@ public class BusModifyAction implements Action{
 	      
 	      List<BusBean> list = bd.scehdulelist(bus_area,bus_no);
 	      System.out.println("리스트 겟");
-	      
+	
 	      forward.setPath("/Bus/BusModify.jsp");
 	      forward.setRedirect(false);
 	      request.setAttribute("bus", bb);

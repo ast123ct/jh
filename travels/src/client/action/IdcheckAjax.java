@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import client.db.ClientDAO;
+
 
 public class IdcheckAjax implements Action {
 

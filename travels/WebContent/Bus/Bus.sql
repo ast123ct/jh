@@ -21,7 +21,7 @@ delete from bus_list;
 select*from bus_list;
 
 select*from bus_list where bus_area='Seoul' and bus_start='남부터미널';
-
+select*from bus_list natural join bus_Seoul_schedule where bus_no=77 and bus_seq=3;
 
 select * from bus_list natural join bus_Seoul_schedule where bus_no=18
 from bus_list natural join bus_Seoul_schedule where bus_no=18;

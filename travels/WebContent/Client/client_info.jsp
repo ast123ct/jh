@@ -5,7 +5,7 @@
 <%@ page import="javax.naming.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("utf-8"); %>
-<jsp:include page="/Client/header.jsp"></jsp:include>
+<jsp:include page="/MainHeader.jsp"></jsp:include>
 
 <%--<c:set var="m" value="${memberinfo}"/> --%>
 <!DOCTYPE html>

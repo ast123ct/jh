@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import client.db.Client;
+import client.db.ClientDAO;
+
 public class updateProcessAction implements Action{
 
 	@Override

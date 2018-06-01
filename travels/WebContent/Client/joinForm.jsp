@@ -13,7 +13,10 @@
 		$("#message").css('display', 'none');//영역을 숨깁니다.
 		$("#idcheck").click(function(){
 			if($("input[name=user_id]").val()==''){
-				alert('아이디를 입력하세요');
+				$("#message").empty();
+				$("#message").show();
+				$("#message").append("중복 확인할 아이디를 입력하세요");
+				$("#message").css('color','red');
 				$("input[name=user_id]").focus();
 				return false;
 			}
@@ -46,7 +49,10 @@
 		sid2 = $("input[name=user_id]").val();//사용 가능한 아이디인데 변경한 경우
 		//중복체크 후 사용 가능한 아이디락 메시지 나왔지만 아이디 변경하고 중복 체크하지 않은 경우
 		if(data_check == -1 || sid != sid2){
-			alert("ID 중복 체크 하세요");
+			$("#message").empty();
+			$("#message").show();
+			$("#message").append("ID 중복 확인을 하세요");
+			$("#message").css('color','red');
 			return false;
 		}
 	})//submit end
@@ -55,27 +61,106 @@
 </script>
 </head>
 <script src = "http://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src = "./Client/join3.js"></script>
+	<script src = "./Client/join1.js"></script>
 	<link href ="css/join.css" rel="stylesheet">
 <body>
+<jsp:include page="/MainHeader.jsp"></jsp:include>
 	<form name="joinform" action="joinProcess.net" method="post">
 	<h1>회원가입 페이지</h1>
 	<hr>
 	<b>아이디&nbsp;<input type="button" id="idcheck" value="중복 검사" >
 	<b id="message"></b></b>
 	<input type="text" name="user_id" id="user_id" placeholder="Enter id" ><br>
-	<b>비밀번호</b>
+	<b>비밀번호<b id="msgPW"></b></b>
 	<input type="password" name="user_passwd" id="user_passwd" placeholder="Enter password" ><br>
-	<b>이름</b>
+	<b>비밀번호 확인<b id="msgPW1"></b></b>
+	<input type="password" name="user_passwd1" id="user_passwd1" ><br>
+	<b>이름<b id="msgName"></b></b>
 	<input type="text" name ="user_name" id="user_name" placeholder="Enter name" ><br>
-	<b>이메일 주소</b>
+	<b>이메일 주소<b id="msgEmail"></b></b>
 	<input type="text" name="user_email" id="user_email" placeholder="Enter email" ><br><br>
-	<b>성향</b>
+	<hr>
+	<b>성향<b id="msgType"></b></b>
+	<h3>다음의 문항을 읽고 적합한 대답을 체크해 주세요</h3><br>
+	<b>나는 조용한것 보다는 수다스러운 편이다.</b>
 	<div>
-		<input type="radio" name="user_type" value="1" ><span>1</span>
-		<input type="radio" name="user_type" value="2" ><span>2</span>
-		<input type="radio" name="user_type" value="3" ><span>3</span>
-		<input type="radio" name="user_type" value="4" ><span>4</span>
+		<input type="radio" name="x1" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="x1" value="1" ><span>그렇다</span>
+		<input type="radio" name="x1" value="0" ><span>보통이다</span>
+		<input type="radio" name="x1" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="x1" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 주장이 강한 편이다.</b>
+	<div>
+		<input type="radio" name="x2" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="x2" value="1" ><span>그렇다</span>
+		<input type="radio" name="x2" value="0" ><span>보통이다</span>
+		<input type="radio" name="x2" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="x2" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 모험적인걸 좋아한다.</b>
+	<div>
+		<input type="radio" name="x3" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="x3" value="1" ><span>그렇다</span>
+		<input type="radio" name="x3" value="0" ><span>보통이다</span>
+		<input type="radio" name="x3" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="x3" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 힘이 넘치는 스타일이다.</b>
+	<div>
+		<input type="radio" name="x4" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="x4" value="1" ><span>그렇다</span>
+		<input type="radio" name="x4" value="0" ><span>보통이다</span>
+		<input type="radio" name="x4" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="x4" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 대담한 편이다</b>
+	<div>
+		<input type="radio" name="x5" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="x5" value="1" ><span>그렇다</span>
+		<input type="radio" name="x5" value="0" ><span>보통이다</span>
+		<input type="radio" name="x5" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="x5" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 상상력이 풍부한 편이다.</b>
+	<div>
+		<input type="radio" name="y1" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="y1" value="1" ><span>그렇다</span>
+		<input type="radio" name="y1" value="0" ><span>보통이다</span>
+		<input type="radio" name="y1" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="y1" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 창의적이라고 생각한다.</b>
+	<div>
+		<input type="radio" name="y2" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="y2" value="1" ><span>그렇다</span>
+		<input type="radio" name="y2" value="0" ><span>보통이다</span>
+		<input type="radio" name="y2" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="y2" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 호기심이 많다.</b>
+	<div>
+		<input type="radio" name="y3" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="y3" value="1" ><span>그렇다</span>
+		<input type="radio" name="y3" value="0" ><span>보통이다</span>
+		<input type="radio" name="y3" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="y3" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 사색을 즐긴다.</b>
+	<div>
+		<input type="radio" name="y4" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="y4" value="1" ><span>그렇다</span>
+		<input type="radio" name="y4" value="0" ><span>보통이다</span>
+		<input type="radio" name="y4" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="y4" value="-2" ><span>매우 그렇지 않다</span>
+	</div><br>
+	<b>나는 세련된 사람이다.</b>
+	<div>
+		<input type="radio" name="y5" value="2" ><span>매우 그렇다</span>
+		<input type="radio" name="y5" value="1" ><span>그렇다</span>
+		<input type="radio" name="y5" value="0" ><span>보통이다</span>
+		<input type="radio" name="y5" value="-1" ><span>그렇지 않다</span>
+		<input type="radio" name="y5" value="-2" ><span>매우 그렇지 않다</span>
 	</div><br>
 	
 	<div class="clearfix">

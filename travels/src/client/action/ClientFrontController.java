@@ -88,11 +88,6 @@ public class ClientFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/main.net")) {
-			forward=new ActionForward();
-			forward.setRedirect(false);	
-			forward.setPath("/Client/main.jsp");
-		}
 		else if(command.equals("/logout.net")) {
 			action = new LogoutAction();
 			try {
@@ -122,6 +117,33 @@ public class ClientFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/FindClientData.net")) {
+			forward=new ActionForward();
+			forward.setRedirect(false);	
+			forward.setPath("/Client/Find.jsp");
+		}
+		else if(command.equals("/FindIDAction.net")) {
+			action = new FindIDAction();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/FindPasswdAction.net")) {
+			action = new FindPasswdAction();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/JoinSuccess.net")) {
+			forward=new ActionForward();
+			forward.setRedirect(false);	
+			forward.setPath("/Client/JoinSuccess.jsp");
+		}
+		
 		
 		
 		if(forward !=null) {

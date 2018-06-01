@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import client.db.Client;
+import client.db.ClientDAO;
+
 public class ListAction implements Action {
 		@Override
 	public ActionForward execute(HttpServletRequest request,

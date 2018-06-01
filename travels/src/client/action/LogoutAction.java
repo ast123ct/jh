@@ -22,7 +22,7 @@ public class LogoutAction implements Action{
 		
 		out.println("<script>");
 		out.println("alert('로그아웃 되었습니다.')");
-		out.println("location.href='login.net'");
+		out.println("location.href='./Mainpage.jsp'");
 		out.println("</script>");
 		out.close();
 		

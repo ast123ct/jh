@@ -3,6 +3,9 @@ package client.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import client.db.Client;
+import client.db.ClientDAO;
+
 public class Client_infoAction implements Action{
 
 	@Override

@@ -1,8 +1,11 @@
 
 drop table client;
 drop table admin;
+drop sequence client_seq;
+
 
 delete from client;
+delete from admin;
 
 create sequence client_seq
 increment by 1
@@ -28,8 +31,11 @@ create table admin(
 select*from client;
 select*from admin;
 
-insert into client values(client_seq.nextval,'whrudqh','1234','asdf','asdf',1);
-insert into client values(2,'whrudqh','1234','asdf','asdf',1);
-insert into admin values(1,'whrudqh','1234','asdf');
-insert into admin values(1,'whrudqh1','1234','asdf');
+insert into client values(client_seq.nextval,'qwer','1234','asdf','asdfasdf',1);
+insert into client values(client_seq.nextval,'whrudqh','1234','asdf','asdf',3);
+
+select user_id from client where user_name ='asdf';
+insert into admin values(1,'admin','1111','asdf');
+update admin set admin_no=10;
+
 

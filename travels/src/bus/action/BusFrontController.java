@@ -36,7 +36,7 @@ public class BusFrontController extends HttpServlet {
     	if(command.equals("/AreaList.bus")) {
 			forward=new ActionForward();
 			forward.setRedirect(false);	
-			forward.setPath("./Bus/AreaList.jsp");
+			forward.setPath("/Bus/AreaList.jsp");
 		}
     	else if(command.equals("/select_start.bus")) {
 			action = new Select_start();
@@ -112,6 +112,15 @@ public class BusFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+    	else if(command.equals("/ScheduleAddAction.bus")) {
+			action = new ScheduleAddAction();
+			try {
+				forward=action.execute(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	
     	
     	if(forward !=null) {
 			if(forward.isRedirect()) {

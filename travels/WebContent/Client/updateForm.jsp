@@ -32,7 +32,7 @@
 	});
 </script>
 <body>
-
+<jsp:include page="/MainHeader.jsp"></jsp:include>
 <form name="joinform" action="updateProcess.net" method="post">
 	<h1>회원수정 페이지</h1>
 	<hr>
@@ -46,10 +46,10 @@
 	<input type="text" name="user_email" id="user_email" placeholder="Enter email" value="${client.user_email }" ><br><br>
 	<b>성별</b>
 	<div>
-	<input type="radio" name="user_type"  value="1" ><span>1</span>
-	<input type="radio" name="user_type"  value="2" ><span>2</span>
-	<input type="radio" name="user_type"  value="3" ><span>3</span>
-	<input type="radio" name="user_type"  value="4" ><span>4</span>
+	<input type="radio" name="user_type"  value="1" ><span>모험 추구 여행자</span>
+	<input type="radio" name="user_type"  value="2" ><span>경험 추구 여행자</span>
+	<input type="radio" name="user_type"  value="3" ><span>안정 추구 여행자</span>
+	<input type="radio" name="user_type"  value="4" ><span>감각 추구 여행자</span>
 	
 	</div><br>
 	

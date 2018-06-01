@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bus.db.BusBean;
+import bus.db.BusDAO;
+
 public class BusAddAction implements Action{
 
 	@Override

@@ -9,7 +9,6 @@
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 	$(document).ready(function(){		
-				
 		$("#bus_area button").click(function(event){
 			 event.preventDefault();
 				var senddata = "area=" + $(this).attr('value');	
@@ -58,6 +57,7 @@
 			output='';
 			$.getJSON('search.bus', nodata,function(data){
 				$(data).each(function(index){
+					
 					output += '<tr>';
 					output += '<td>'+this.bus_seq+'</td>';
 					output += '<td>'+this.bus_linename+'</td>';
@@ -66,12 +66,23 @@
 					output += '<td>'+this.bus_arrival+'</td>';
 					output += '<td>'+this.bus_cost_ad+'</td>';
 					output += '<td>'+this.bus_cost_st+'</td>';
-					output += '<td>'+this.bus_cost_ch+'</td>';
-					output += '<td><button name=\"add\">일정추가</td>';
+					output += '<td>'+this.bus_cost_ch+'</td>'; 
+					/* output += '<td><button type="button" name="add" id="add" value="'+ this.bus_seq +'">일정추가</td>'; */
+					/* output += '<td><a href ="./ScheduleAddAction.bus?area='+this.bus_area+'&no='
+							+this.bus_no+'&seq='+this.bus_seq+'">일정 추가</a></td>'; */
+					/* output += '<td><a href ="./ScheduleAddAction.bus?seq='+this.bus_seq+'" id="add">일정 추가</a></td>'; */
+					output += '<td><a href ="" name="'+this.bus_seq +'"id="add">일정 추가</a></td>';
+					output += '</tr>';
 					output += '</tr>';
 				})//function end
 				$('#output').append(output);
 			})//JSON end
+		})//click end
+		
+		$("#output").on("click","#add", function(e){
+			e.preventDefault();
+			var address = "./ScheduleAddAction.bus?seq=" + $(this).attr("name")+"&date="+$("#datepicker").val();
+			window.open( address,"add","width=500 height=500");
 		})//click end
 	})//ready end
 </script>
@@ -109,13 +120,15 @@
 
 <form id=select>
 	<select id="bus_start" name="bus_start">
+	<option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 	</select>
 	<select id="bus_end"  name="bus_end">
-	</select>
-	<select id="date" name="date">
+	<option></option>
 	</select>
 	<button name="search" id="search">조회</button>
-<div>
+</form>
+<jsp:include page="Calendar.jsp"></jsp:include>
+<form name="busschedule" id ="busschedule">
 	<table border="1">
 	<thead>
 		<tr>
@@ -124,7 +137,6 @@
 	</thead>
 	<tbody id="output"></tbody>
 	</table>
-</div>
 </form>
 </body>
 </html>

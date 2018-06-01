@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 
+import bus.db.BusDAO;
+
 public class Search implements Action{
 
 	@Override
@@ -25,7 +27,6 @@ public class Search implements Action{
 		int no = Integer.parseInt(request.getParameter("bus_no"));
 		
 		session.setAttribute("no", no);
-		
 		System.out.println("search1 "+ area);
 		System.out.println("search2 "+ start);
 		System.out.println("search3 "+ end);

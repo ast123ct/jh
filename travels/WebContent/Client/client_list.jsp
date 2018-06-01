@@ -9,7 +9,7 @@
 <link href ="css/list.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="/Client/header.jsp"></jsp:include>
+	<jsp:include page="/MainHeader.jsp"></jsp:include>
 	<table>
 		<thead>
 			<tr>
